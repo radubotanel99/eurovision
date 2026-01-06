@@ -1,0 +1,67 @@
+# IDE and Editors
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+*.sublime-workspace
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+.c9/
+.history/
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Frontend (Angular)
+eurovision-frontend/node_modules/
+eurovision-frontend/dist/
+eurovision-frontend/tmp/
+eurovision-frontend/out-tsc/
+eurovision-frontend/bazel-out/
+eurovision-frontend/.angular/
+eurovision-frontend/coverage/
+eurovision-frontend/.sass-cache/
+eurovision-frontend/connect.lock
+eurovision-frontend/libpeerconnection.log
+eurovision-frontend/testem.log
+eurovision-frontend/typings/
+eurovision-frontend/npm-debug.log
+eurovision-frontend/yarn-error.log
+
+# Backend (Maven/Spring Boot)
+eurovision-backend/target/
+eurovision-backend/.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+eurovision-backend/build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# NetBeans
+**/nbproject/private/
+**/nbbuild/
+**/nbdist/
+**/.nb-gradle/
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+
+# Temporary files
+*.tmp
+*.temp
+

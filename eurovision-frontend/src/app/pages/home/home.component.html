@@ -1,0 +1,80 @@
+<section class="page page--home">
+  <!-- <img src="assets/images/70-heart.jpg" alt="70 Heart" class="top-left-heart"> -->
+  <img src="assets/images/70-logo.jpg" alt="70 Logo" class="top-right-logo-70">
+  <img src="assets/images/ubm.svg" alt="UBM Logo" class="top-right-logo">
+  <!-- <h1>Eurovision <span class="text-white">2026</span></h1> -->
+  <!-- <p>Welcome! Start by <span class="text-pink">choosing your country</span> and then watch performances, vote, and see the results.</p> -->
+  <h1><span class="text-white">Welcome to the </span>
+  <span ><span class="text-pink" >Grand Final</span> <span class="text-white">!</span></span>
+  </h1>
+  <!-- <h1 style="font-size: 6rem;"><span class="text-pink" >Grand Final</span> <span class="text-white">!</span></h1> -->
+  <p>The lights are dimmed, the crowd is roaring, and millions are watching.
+    <span class="text-pink"><b>It's your time</b></span> to shine on the world's biggest stage. </p>
+  <p><span class="text-pink"><b>Sing your performance</b></span> with passion,
+    watch your rivals take the spotlight, and cast your tactical votes.</p>
+  <p>Will you bring the trophy home?</p>
+  <button class="start-button" (click)="openForm()">Enter the Race</button>
+</section>
+
+<!-- Registration Modal -->
+<div class="modal-overlay" *ngIf="showForm" (click)="onOverlayClick($event)">
+  <div class="modal-content" (click)="closeCountryDropdown()">
+    <button class="close-button" (click)="closeForm()" aria-label="Close">
+      <span>&times;</span>
+    </button>
+    
+    <div class="modal-header">
+      <h2 class="modal-title">
+        <span class="text-white">Enter the </span><span class="text-pink">Competition</span>
+      </h2>
+      <!-- <p class="modal-subtitle">Fill in your details to join the Grand Final</p> -->
+    </div>
+
+    <form (ngSubmit)="submitForm()" class="registration-form">
+      <!-- Country Selection -->
+      <div class="form-group">
+        <label for="country" class="form-label">
+          <span class="label-text">Select Your Country</span>
+          <span class="required-indicator">*</span>
+        </label>
+        <div class="custom-dropdown" [class.error]="formErrors.country" (click)="$event.stopPropagation()">
+          <div 
+            class="dropdown-trigger" 
+            (click)="toggleCountryDropdown()"
+            [class.placeholder]="!userData.country">
+            <span>{{ userData.country || 'Choose your country...' }}</span>
+            <span class="dropdown-arrow" [class.open]="showCountryDropdown">▼</span>
+          </div>
+          <div class="dropdown-menu" *ngIf="showCountryDropdown">
+            <div 
+              class="dropdown-option" 
+              *ngFor="let country of countries"
+              (click)="selectCountry(country.name)"
+              [class.selected]="userData.country === country.name">
+              {{ country.name }}
+            </div>
+          </div>
+        </div>
+        <span class="error-message" *ngIf="formErrors.country">{{ formErrors.country }}</span>
+      </div>
+
+      <!-- Motivational Text -->
+      <p class="form-motivation" ><b>It's your time now. Make your nation proud.</b></p>
+
+      <!-- Error Message -->
+      <div class="form-error-message" *ngIf="errorMessage">
+        <span class="error-icon">⚠</span>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button type="submit" class="submit-button" [disabled]="isSubmitting">
+          <span *ngIf="!isSubmitting">Step onto the Stage</span>
+          <span *ngIf="isSubmitting">Submitting...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
