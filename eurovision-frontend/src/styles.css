@@ -164,3 +164,46 @@ body::before {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Global Top Right Logo Styles - Modify once, applies to all pages */
+.top-right-logo-70 {
+  position: absolute;
+  top: var(--spacing-md);
+  right: 5rem;
+  height: var(--image-size-small);
+  width: auto;
+  z-index: 10;
+}
+
+.top-right-logo {
+  position: absolute;
+  top: 4.5rem;
+  right: 3rem;
+  height: var(--image-size-small);
+  width: auto;
+  z-index: 10;
+}
+
+/* Responsive adjustments for logo positioning */
+@media (max-width: 576px) {
+  .top-right-logo-70 {
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+  }
+
+  .top-right-logo {
+    top: 3rem;
+    right: var(--spacing-sm);
+  }
+}
+
+@media (min-width: 577px) and (max-width: 1024px) {
+  .top-right-logo-70 {
+    right: 2rem;
+  }
+
+  .top-right-logo {
+    top: 3.5rem;
+    right: 2rem;
+  }
+}

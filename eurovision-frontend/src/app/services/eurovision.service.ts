@@ -17,7 +17,7 @@ export class EurovisionService {
   }
 
   updateUserCountry(country: string): Observable<string> {
-    return this.http.put(`${this.countriesUrl}`, JSON.stringify(country), {
+    return this.http.put(`${this.countriesUrl}`, { name: country }, {
       headers: { 'Content-Type': 'application/json' },
       responseType: 'text'
     });

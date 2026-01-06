@@ -1,0 +1,72 @@
+<section class="page page--select-country">
+  <img src="assets/images/70-logo.jpg" alt="70 Logo" class="top-right-logo-70">
+  <img src="assets/images/ubm.svg" alt="UBM Logo" class="top-right-logo">
+  <div class="select-country-container">
+    <div class="page-header">
+      <h1>
+        <span class="text-white">Choose Your </span>
+        <span class="text-pink">Country</span>
+        <span class="text-white">...</span>
+      </h1>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-message" *ngIf="errorMessage">
+      <span class="error-icon">⚠</span>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading" *ngIf="isLoading">
+      <p>Loading countries...</p>
+    </div>
+
+    <!-- Countries Grid -->
+    <div class="countries-grid" *ngIf="!isLoading && countries.length > 0">
+      <div 
+        class="country-card" 
+        *ngFor="let country of countries"
+        [class.selected]="selectedCountry === country.name"
+        (click)="selectCountry(country.name)">
+        <div class="country-card-header">
+          <h3 class="country-name">{{ country.name }}</h3>
+          <div class="selection-indicator" *ngIf="selectedCountry === country.name">
+            ✓
+          </div>
+        </div>
+        
+        <div class="country-details">
+          <div class="song-info">
+            <div class="song-thumbnail" *ngIf="country.song.youtubeVideoId">
+              <img 
+                [src]="getYouTubeThumbnail(country.song.youtubeVideoId)" 
+                [alt]="country.song.songTitle"
+                (error)="onImageError($event)">
+            </div>
+            <div class="song-details">
+              <p class="artist-name">
+                <span class="label">Artist:</span>
+                <span class="value">{{ country.song.artistName }}</span>
+              </p>
+              <p class="song-title">
+                <span class="label">Song:</span>
+                <span class="value">{{ country.song.songTitle }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="action-section" *ngIf="!isLoading">
+      <button 
+        class="submit-button" 
+        (click)="submitSelection()"
+        [disabled]="!selectedCountry || isSubmitting">
+        <span *ngIf="!isSubmitting">Step onto the Stage</span>
+        <span *ngIf="isSubmitting">Submitting...</span>
+      </button>
+    </div>
+  </div>
+</section>

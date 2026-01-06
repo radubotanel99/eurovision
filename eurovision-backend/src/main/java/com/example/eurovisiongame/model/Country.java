@@ -39,11 +39,19 @@ public class Country {
         isUserCountry = userCountry;
     }
 
-    public Song getPerformance() {
+    public Song getSong() {
         return song;
     }
 
-    public void setPerformance(Song song) {
+    public void setSong(Song song) {
         this.song = song;
+    }
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "name='" + name + '\'' +
+                ", isUserCountry=" + isUserCountry +
+                '}';
     }
 }

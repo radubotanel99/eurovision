@@ -28,7 +28,8 @@ public class CountryController {
     }
 
     @PutMapping
-    public ResponseEntity<String> setUserCountry(@RequestBody String countryName) {
+    public ResponseEntity<String> setUserCountry(@RequestBody java.util.Map<String, String> request) {
+        String countryName = request.get("name");
         countryService.setUserCountry(countryName);
         return ResponseEntity.status(HttpStatus.CREATED).body("ok");
     }
