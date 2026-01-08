@@ -1,17 +1,19 @@
 package com.example.eurovisiongame.model;
 
+import java.util.Objects;
+
 public class Country {
     private String name;
     private int totalPoints;
-    private boolean isUserCountry;
+    private boolean userCountry;
     private Song song;
 
     public Country() {}
 
-    public Country(String name, int totalPoints, boolean isUserCountry, Song song) {
+    public Country(String name, int totalPoints, boolean userCountry, Song song) {
         this.name = name;
         this.totalPoints = totalPoints;
-        this.isUserCountry = isUserCountry;
+        this.userCountry = userCountry;
         this.song = song;
     }
 
@@ -32,11 +34,11 @@ public class Country {
     }
 
     public boolean isUserCountry() {
-        return isUserCountry;
+        return userCountry;
     }
 
     public void setUserCountry(boolean userCountry) {
-        isUserCountry = userCountry;
+        this.userCountry = userCountry;
     }
 
     public Song getSong() {
@@ -48,10 +50,22 @@ public class Country {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Country country = (Country) o;
+        return Objects.equals(name, country.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
+    }
+
+    @Override
     public String toString() {
         return "Country{" +
                 "name='" + name + '\'' +
-                ", isUserCountry=" + isUserCountry +
+                ", isUserCountry=" + userCountry +
                 '}';
     }
 }

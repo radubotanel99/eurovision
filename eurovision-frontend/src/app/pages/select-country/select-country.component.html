@@ -26,11 +26,11 @@
       <div 
         class="country-card" 
         *ngFor="let country of countries"
-        [class.selected]="selectedCountry === country.name"
+        [class.selected]="selectedCountry?.name === country.name"
         (click)="selectCountry(country.name)">
         <div class="country-card-header">
           <h3 class="country-name">{{ country.name }}</h3>
-          <div class="selection-indicator" *ngIf="selectedCountry === country.name">
+          <div class="selection-indicator" *ngIf="selectedCountry?.name === country.name">
             ✓
           </div>
         </div>

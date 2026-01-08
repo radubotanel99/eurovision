@@ -16,7 +16,7 @@ export class SelectCountryComponent implements OnInit {
   isLoading = true;
   errorMessage = '';
   isSubmitting = false;
-  selectedCountry: string | null = null;
+  selectedCountry: Country | null = null;
 
   constructor(
     private eurovisionService: EurovisionService,
@@ -42,7 +42,7 @@ export class SelectCountryComponent implements OnInit {
   }
 
   selectCountry(countryName: string): void {
-    this.selectedCountry = countryName;
+    this.selectedCountry = this.countries.find(c => c.name === countryName) || null;
   }
 
   submitSelection(): void {
@@ -55,8 +55,8 @@ export class SelectCountryComponent implements OnInit {
     this.errorMessage = '';
 
     this.eurovisionService.updateUserCountry(this.selectedCountry).subscribe({
-      next: (response) => {
-        console.log('Country updated successfully:', response);
+      next: () => {
+        console.log('Country updated successfully');
         this.isSubmitting = false;
         // Navigate to home or next page after successful selection
         this.router.navigate(['/']);

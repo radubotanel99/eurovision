@@ -16,10 +16,9 @@ export class EurovisionService {
     return this.http.get<Country[]>(this.countriesUrl);
   }
 
-  updateUserCountry(country: string): Observable<string> {
-    return this.http.put(`${this.countriesUrl}`, { name: country }, {
-      headers: { 'Content-Type': 'application/json' },
-      responseType: 'text'
+  updateUserCountry(country: Country): Observable<void> {
+    return this.http.put<void>(`${this.countriesUrl}`, country, {
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 }

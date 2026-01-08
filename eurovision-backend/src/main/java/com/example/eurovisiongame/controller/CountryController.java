@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/countries")
@@ -28,9 +29,9 @@ public class CountryController {
     }
 
     @PutMapping
-    public ResponseEntity<String> setUserCountry(@RequestBody java.util.Map<String, String> request) {
-        String countryName = request.get("name");
-        countryService.setUserCountry(countryName);
-        return ResponseEntity.status(HttpStatus.CREATED).body("ok");
+    public ResponseEntity<Void> setUserCountry(@RequestBody Country userCountry) {
+        countryService.setUserCountry(userCountry);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
+
 }

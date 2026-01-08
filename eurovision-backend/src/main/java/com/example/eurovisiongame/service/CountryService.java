@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +29,7 @@ public class CountryService {
         countries.add(new Country("Sweden", 0, false, new Song("KAJ", "Bara Bada Bastu", "WK3HOMhAeQY&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=25")));
         countries.add(new Country("Switzerland", 0, false, new Song("Zoë Më", "Voyage", "dGX54zRExR8&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=23")));
         countries.add(new Country("Ireland", 0, false, new Song("EMMY", "Laika Party", "cZnusVb7yjs&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=16")));
+        countries.add(new Country("Belgium", 0, false, new Song("Red Sebastian", "Strobe Lights", "ScupiVTosHU&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=18")));
     }
 
     public List<Country> getCountries() {
@@ -44,21 +46,20 @@ public class CountryService {
                 .collect(Collectors.toList());
     }
 
-    public void setUserCountry(String countryName) {
-//        for (Country country : countries) {
-//            if (country.getName().equalsIgnoreCase(countryName)) {
-//                country.setUserCountry(true);
-//            } else {
-//                country.setUserCountry(false);
-//            }
-//        }
-        countries.forEach(country -> country.setUserCountry(country.getName().equalsIgnoreCase(countryName)));
+    public void setUserCountry(Country userCountry) {
+        for (Country country : countries) {
+            country.setUserCountry(country.equals(userCountry));
+        }
     }
 
-//    static void main() {
-//        List<Country> allCountries = new CountryService().getAllCountries();
-//        for (Country country : allCountries) {
-//            IO.println(country);
-//        }
-//    }
+    public Country getUserCountry() {
+        return countries.stream().filter(Country::isUserCountry).findFirst().orElse(null);
+    }
+
+    public void setTotalPoints(Map<String, Integer> pointsByCountryName) {
+        for (Country country : this.countries) {
+            Integer totalPoints = pointsByCountryName.getOrDefault(country.getName(), 0);
+            country.setTotalPoints(totalPoints);
+        }
+    }
 }
