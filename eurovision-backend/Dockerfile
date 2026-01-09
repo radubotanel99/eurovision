@@ -1,10 +1,15 @@
-# Use Maven to build the app
-FROM maven:3.9.6-eclipse-temurin-21 AS build
+# 1. Use Java 25 for the build stage (instead of the Maven image)
+FROM eclipse-temurin:25-jdk AS build
+WORKDIR /app
 COPY . .
-RUN mvn clean package -DskipTests
 
-# Use Eclipse Temurin for Java 25
+# Make the maven wrapper executable and build
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
+
+# 2. Use Java 25 for the run stage
 FROM eclipse-temurin:25-jdk
-COPY --from=build /target/*.jar app.jar
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 10000
 ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=10000"]
