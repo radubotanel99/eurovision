@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { Country } from '../models/country.interface';
 import { Vote } from '../models/vote.interface';
 import { CountryVotesDTO } from '../models/country-votes-dto.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EurovisionService {
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = environment.apiUrl;
   private countriesUrl = `${this.apiUrl}/countries`;
   private voteUrl = `${this.apiUrl}/vote`;
 
