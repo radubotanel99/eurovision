@@ -26,14 +26,14 @@ public class VoteService {
     }
 
     public void setUserVotes(List<Vote> userVotes) {
-        updateVotingCountry(votes);
         this.votes = userVotes;
+        updateVotingCountry(userVotes);
+        generateRandomVotes();
     }
 
     private void updateVotingCountry(List<Vote> votes) {
         String name = countryService.getUserCountry().getName();
         votes.forEach(vote -> vote.setVotingCountry(name));
-        generateRandomVotes();
     }
 
     private void generateRandomVotes() {

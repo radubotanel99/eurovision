@@ -1,7 +1,93 @@
 <section class="page page--performances">
   <img src="assets/images/70-logo.jpg" alt="70 Logo" class="top-right-logo-70">
   <img src="assets/images/ubm.svg" alt="UBM Logo" class="top-right-logo">
-  <h1><span class="text-white">Performances</span></h1>
-  <p>All <span class="text-pink">Eurovision performances</span> will be listed here.</p>
+  <div class="performances-container">
+    <!-- <div class="page-header">
+      <h1 style="font-size: 2.2rem;"><b>
+        <span class="text-white">UNITED BY MUSIC:  </span>
+        <span class="text-pink">THE COMPLETE STAGE</span>
+      </b></h1>
+    </div> -->
+
+    <!-- Error Message -->
+    <div class="error-message" *ngIf="errorMessage">
+      <span class="error-icon">⚠</span>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading" *ngIf="isLoading">
+      <p>Loading performances...</p>
+    </div>
+
+    <!-- Performances Content -->
+    <div class="performances-content" *ngIf="!isLoading">
+      <!-- Video Player Section -->
+      <div class="video-section" *ngIf="selectedVideoUrl && selectedCountry">
+        <div class="video-player-container">
+          <h3 class="video-title">{{ selectedCountry.name }} - {{ selectedCountry.song.songTitle }}</h3>
+          <div class="video-wrapper">
+            <iframe
+              [src]="selectedVideoUrl"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="youtube-embed">
+            </iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- Countries Grid -->
+      <div class="countries-grid" 
+           *ngIf="countries.length > 0"
+           [class.no-video-spacing]="!selectedVideoUrl || !selectedCountry">
+        <div 
+          class="country-card" 
+          *ngFor="let country of countries"
+          (click)="playVideo(country)"
+          [class.selected]="selectedCountry?.name === country.name"
+          [class.watched]="isWatched(country)">
+          <div class="country-card-header">
+            <h3 class="country-name">{{ country.name }}</h3>
+          </div>
+          
+          <div class="country-details">
+            <div class="song-info">
+              <div class="song-thumbnail" *ngIf="country.song.youtubeVideoId">
+                <img 
+                  [src]="getYouTubeThumbnail(country.song.youtubeVideoId)" 
+                  [alt]="country.song.songTitle"
+                  (error)="onImageError($event)">
+                <div class="play-overlay">
+                  <span class="play-icon">▶</span>
+                </div>
+              </div>
+              <div class="song-details">
+                <p class="artist-name">
+                  <span class="label">Artist:</span>
+                  <span class="value">{{ country.song.artistName }}</span>
+                </p>
+                <p class="song-title">
+                  <span class="label">Song:</span>
+                  <span class="value">{{ country.song.songTitle }}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Continue Button -->
+      <div class="action-section" *ngIf="!isLoading && countries.length > 0">
+        <button 
+          class="continue-button" 
+          [disabled]="!areAllCountriesWatched()"
+          (click)="continueToVoting()">
+          Continue to Voting
+        </button>
+      </div>
+    </div>
+  </div>
 </section>
 

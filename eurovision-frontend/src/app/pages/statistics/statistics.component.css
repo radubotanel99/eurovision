@@ -1,0 +1,371 @@
+.page--statistics {
+  padding: var(--spacing-lg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.statistics-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.page-header h1 {
+  margin-bottom: var(--spacing-sm);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-pink {
+  color: #f20d58;
+}
+
+.error-message {
+  background-color: rgba(242, 13, 88, 0.2);
+  border: 1px solid #f20d58;
+  color: #ffffff;
+  padding: var(--spacing-md);
+  border-radius: 8px;
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.error-icon {
+  font-size: 1.2rem;
+}
+
+.loading {
+  text-align: center;
+  color: #ffffff;
+  padding: var(--spacing-xl);
+  font-size: 1.2rem;
+}
+
+.statistics-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.voting-breakdown {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: var(--spacing-sm);
+}
+
+.section-title {
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 var(--spacing-lg) 0;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+/* Table Wrapper */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  position: relative;
+  width: 100%;
+  margin: 0;
+}
+
+.table-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Material Table Overrides */
+.votes-table {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  z-index: 1;
+  border-collapse: collapse;
+  margin: 0;
+}
+
+.votes-table th,
+.votes-table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.95);
+  padding: var(--spacing-sm);
+  text-align: center;
+}
+
+.votes-table th {
+  background: rgba(242, 13, 88, 0.5);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.votes-table td {
+  background: rgba(0, 0, 0, 0.4);
+  font-size: 0.9rem;
+}
+
+/* Sticky Column for Voting Country */
+.sticky-column {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.7) !important;
+  min-width: 150px;
+  text-align: left !important;
+}
+
+.voting-country-header {
+  background: rgba(242, 13, 88, 0.6) !important;
+  z-index: 11;
+}
+
+.voting-country-cell {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Sticky Column for Total */
+.sticky-column-right {
+  position: sticky;
+  right: 0;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.7) !important;
+  min-width: 80px;
+  text-align: center !important;
+}
+
+.total-header {
+  background: rgba(242, 13, 88, 0.6) !important;
+  z-index: 11;
+  font-weight: 700;
+}
+
+.total-cell {
+  background: rgba(242, 13, 88, 0.3) !important;
+  font-weight: 700;
+}
+
+.total-points-value {
+  color: #f20d58;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+/* Table Rows */
+.table-header-row {
+  background: rgba(242, 13, 88, 0.3);
+}
+
+.table-row {
+  transition: background-color 0.2s ease;
+}
+
+.table-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.table-row.user-row {
+  background: rgba(242, 13, 88, 0.25);
+}
+
+.table-row.user-row:hover {
+  background: rgba(242, 13, 88, 0.3);
+}
+
+.table-row.user-row .sticky-column {
+  background: rgba(242, 13, 88, 0.4) !important;
+}
+
+.table-row.user-row .sticky-column-right {
+  background: rgba(242, 13, 88, 0.4) !important;
+}
+
+.table-row.user-row td {
+  background: rgba(242, 13, 88, 0.2) !important;
+}
+
+/* Country Header Cells */
+.country-header-cell {
+  background: rgba(242, 13, 88, 0.25) !important;
+  font-size: 0.85rem;
+  min-width: 100px;
+  padding: var(--spacing-sm) var(--spacing-xs) !important;
+  white-space: nowrap;
+}
+
+/* Vote Cells */
+.vote-cell {
+  min-width: 50px;
+}
+
+.vote-cell.has-vote {
+  background: rgba(242, 13, 88, 0.25);
+}
+
+.vote-cell.self-vote {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.vote-cell .points-value {
+  color: #f20d58;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.vote-cell .self-vote-text {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.9rem;
+}
+
+.vote-cell .no-points {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.85rem;
+}
+
+.user-badge {
+  color: #f20d58;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-left: var(--spacing-xs);
+}
+
+.action-section {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.back-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.back-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page--statistics {
+    padding: var(--spacing-md);
+  }
+
+
+  .votes-table th,
+  .votes-table td {
+    padding: var(--spacing-sm);
+    font-size: 0.8rem;
+  }
+
+  .country-header-cell {
+    min-width: 80px;
+    padding: var(--spacing-xs) !important;
+    font-size: 0.75rem;
+  }
+
+  .sticky-column {
+    min-width: 120px;
+    font-size: 0.8rem;
+  }
+
+  .sticky-column-right {
+    min-width: 70px;
+    font-size: 0.8rem;
+  }
+
+  .total-points-value {
+    font-size: 1rem;
+  }
+
+  .vote-cell {
+    min-width: 40px;
+  }
+
+  .vote-cell .points-value {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+
+
+  .sticky-column {
+    min-width: 100px;
+    font-size: 0.75rem;
+  }
+
+  .sticky-column-right {
+    min-width: 60px;
+    font-size: 0.75rem;
+  }
+
+  .total-points-value {
+    font-size: 0.9rem;
+  }
+
+  .country-header-cell {
+    min-width: 70px;
+    font-size: 0.7rem;
+  }
+
+  .vote-cell {
+    min-width: 35px;
+    padding: var(--spacing-xs) !important;
+  }
+
+  .user-badge {
+    display: block;
+    margin-left: 0;
+    margin-top: 2px;
+  }
+}

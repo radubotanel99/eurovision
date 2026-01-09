@@ -1,21 +1,326 @@
-.page {
-  padding: 1.5rem;
+.page--results {
+  padding: var(--spacing-lg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   position: relative;
 }
 
-h1 {
-  color: #f20d58;
+.results-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.page-header h1 {
+  margin-bottom: var(--spacing-sm);
+  font-size: clamp(2rem, 5vw, 3.5rem);
 }
 
 .text-white {
   color: #ffffff;
 }
 
-p {
+.text-pink {
+  color: #f20d58;
+}
+
+.error-message {
+  background-color: rgba(242, 13, 88, 0.2);
+  border: 1px solid #f20d58;
+  color: #ffffff;
+  padding: var(--spacing-md);
+  border-radius: 8px;
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.error-icon {
+  font-size: 1.2rem;
+}
+
+.loading {
+  text-align: center;
+  color: #ffffff;
+  padding: var(--spacing-xl);
+  font-size: 1.2rem;
+}
+
+.results-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.winner-announcement {
+  text-align: center;
+  background: linear-gradient(135deg, rgba(242, 13, 88, 0.3), rgba(242, 13, 88, 0.1));
+  backdrop-filter: blur(10px);
+  border: 3px solid #f20d58;
+  border-radius: 20px;
+  padding: var(--spacing-xl);
+  box-shadow: 0 8px 32px rgba(242, 13, 88, 0.4);
+}
+
+.winner-badge {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.winner-title {
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0 0 var(--spacing-sm) 0;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.winner-points {
+  color: #f20d58;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.user-position {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: var(--spacing-lg);
+}
+
+.user-position-text {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.leaderboard {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: var(--spacing-lg);
+}
+
+.leaderboard-title {
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 var(--spacing-lg) 0;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.leaderboard-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px;
+  gap: var(--spacing-md);
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: var(--spacing-md);
+  transition: all 0.3s ease;
+}
+
+.leaderboard-item:hover {
+  transform: translateX(4px);
+  border-color: rgba(242, 13, 88, 0.5);
+}
+
+.leaderboard-item.winner {
+  background: linear-gradient(135deg, rgba(242, 13, 88, 0.2), rgba(242, 13, 88, 0.1));
+  border-color: #f20d58;
+  box-shadow: 0 4px 16px rgba(242, 13, 88, 0.3);
+}
+
+.leaderboard-item.user-country {
+  border-color: rgba(242, 13, 88, 0.6);
+  background: rgba(242, 13, 88, 0.15);
+}
+
+.position {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.position-number {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  min-width: 30px;
+}
+
+.position-medal {
+  font-size: 1.5rem;
+}
+
+.country-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.country-name {
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.country-song {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+}
+
+.points-value {
+  color: #f20d58;
+  font-size: 2rem;
+  font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1;
+}
+
+.points-label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.action-section {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.action-button {
+  border: none;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.statistics-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.statistics-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.play-again-button {
+  background-color: #f20d58;
   color: #ffffff;
 }
 
-.text-pink {
-  color: #f20d58;
+.play-again-button:hover {
+  background-color: #d00a4a;
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page--results {
+    padding: var(--spacing-md);
+  }
+
+  .winner-title {
+    font-size: 2rem;
+  }
+
+  .winner-points {
+    font-size: 2rem;
+  }
+
+  .leaderboard-item {
+    grid-template-columns: 60px 1fr 100px;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+  }
+
+  .position-number {
+    font-size: 1.2rem;
+  }
+
+  .country-name {
+    font-size: 1.1rem;
+  }
+
+  .points-value {
+    font-size: 1.5rem;
+  }
+
+  .action-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .winner-title {
+    font-size: 1.5rem;
+  }
+
+  .leaderboard-item {
+    grid-template-columns: 50px 1fr 80px;
+  }
+
+  .country-song {
+    font-size: 0.8rem;
+  }
 }
 

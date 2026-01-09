@@ -1,7 +1,147 @@
 <section class="page page--voting">
   <img src="assets/images/70-logo.jpg" alt="70 Logo" class="top-right-logo-70">
   <img src="assets/images/ubm.svg" alt="UBM Logo" class="top-right-logo">
-  <h1><span class="text-pink">Voting</span></h1>
-  <p><span class="text-white">Voting interface</span> will be implemented here.</p>
+  <div class="voting-container">
+    <div class="page-header">
+      <h1>
+        <span class="text-white">Cast Your </span>
+        <span class="text-pink">Votes</span>
+      </h1>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-message" *ngIf="errorMessage">
+      <span class="error-icon">⚠</span>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading" *ngIf="isLoading">
+      <p>Loading voting interface...</p>
+    </div>
+
+    <!-- Voting Content -->
+    <div class="voting-content" *ngIf="!isLoading">
+      <!-- Country Modal Form -->
+      <div class="country-modal" *ngIf="selectedCountry && selectedVideoUrl">
+        <div class="modal-content">
+          <button class="close-button" (click)="closeModal()" type="button" aria-label="Close">
+            ×
+          </button>
+          
+          <div class="modal-header">
+            <h2 class="modal-country-name">{{ selectedCountry.name }}</h2>
+          </div>
+
+          <div class="modal-body">
+            <div class="modal-video-section">
+              <div class="video-player-container">
+                <div class="video-wrapper">
+                  <iframe
+                    [src]="selectedVideoUrl"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="youtube-embed">
+                  </iframe>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-info">
+              <p class="modal-artist">
+                <span class="label">Artist:</span>
+                <span class="value">{{ selectedCountry.song.artistName }}</span>
+              </p>
+              <p class="modal-song">
+                <span class="label">Song:</span>
+                <span class="value">{{ selectedCountry.song.songTitle }}</span>
+              </p>
+            </div>
+
+            <div class="modal-voting">
+              <label for="modal-points-{{ selectedCountry.name }}" class="modal-points-label">Points:</label>
+              <select 
+                [id]="'modal-points-' + selectedCountry.name"
+                [ngModel]="getVote(selectedCountry.name)"
+                (ngModelChange)="updateVote(selectedCountry.name, $event)"
+                class="modal-points-select">
+                <option [ngValue]="''">Select</option>
+                <option *ngFor="let points of getAvailablePoints(selectedCountry.name)" [ngValue]="points">
+                  {{ points }}
+                </option>
+              </select>
+              <button class="modal-ok-button" (click)="closeModal()" type="button">
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Countries Grid -->
+      <div class="countries-grid" 
+           *ngIf="countries.length > 0">
+        <div 
+          class="vote-item" 
+          *ngFor="let country of countries"
+          [class.selected]="selectedCountry?.name === country.name"
+          (click)="openCountryModal(country)">
+          <div class="vote-item-header">
+            <h3 class="country-name">{{ country.name }}</h3>
+          </div>
+          
+          <div class="vote-item-details">
+            <div class="song-info">
+              <div class="song-thumbnail" *ngIf="country.song.youtubeVideoId">
+                <img 
+                  [src]="getYouTubeThumbnail(country.song.youtubeVideoId)" 
+                  [alt]="country.song.songTitle"
+                  (error)="onImageError($event)">
+                <div class="play-overlay">
+                  <span class="play-icon">▶</span>
+                </div>
+              </div>
+              <div class="song-details">
+                <p class="artist-name">
+                  <span class="label">Artist:</span>
+                  <span class="value">{{ country.song.artistName }}</span>
+                </p>
+                <p class="song-title">
+                  <span class="label">Song:</span>
+                  <span class="value">{{ country.song.songTitle }}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="points-input" (click)="$event.stopPropagation()">
+            <label for="points-{{ country.name }}">Points:</label>
+            <select 
+              [id]="'points-' + country.name"
+              [ngModel]="getVote(country.name)"
+              (ngModelChange)="updateVote(country.name, $event)"
+              class="points-select">
+              <option [ngValue]="''">Select</option>
+              <option *ngFor="let points of getAvailablePoints(country.name)" [ngValue]="points">
+                {{ points }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Section -->
+      <div class="submit-section">
+        <button 
+          class="submit-button" 
+          (click)="submitVotes()"
+          [disabled]="!canSubmit() || isSubmitting">
+          <span *ngIf="!isSubmitting">Submit Votes</span>
+          <span *ngIf="isSubmitting">Submitting...</span>
+        </button>
+      </div>
+    </div>
+  </div>
 </section>
 

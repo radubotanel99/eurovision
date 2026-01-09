@@ -34,4 +34,13 @@ public class CountryController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @GetMapping("/user")
+    public ResponseEntity<Country> getUserCountry() {
+        Country userCountry = countryService.getUserCountry();
+        if (userCountry != null) {
+            return ResponseEntity.ok(userCountry);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
 }

@@ -1,7 +1,84 @@
 <section class="page page--results">
   <img src="assets/images/70-logo.jpg" alt="70 Logo" class="top-right-logo-70">
   <img src="assets/images/ubm.svg" alt="UBM Logo" class="top-right-logo">
-  <h1><span class="text-white">Results</span></h1>
-  <p>Final <span class="text-pink">Eurovision results</span> and breakdown will be shown here.</p>
+  <div class="results-container">
+    <div class="page-header">
+      <h1>
+        <span class="text-white">Final </span>
+        <span class="text-pink">Results</span>
+      </h1>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-message" *ngIf="errorMessage">
+      <span class="error-icon">⚠</span>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading" *ngIf="isLoading">
+      <p>Loading results...</p>
+    </div>
+
+    <!-- Results Content -->
+    <div class="results-content" *ngIf="!isLoading && countries.length > 0">
+      <!-- Winner Announcement -->
+      <div class="winner-announcement" *ngIf="getWinner()">
+        <div class="winner-badge">🏆</div>
+        <h2 class="winner-title">{{ getWinner()!.name }} Wins!</h2>
+        <p class="winner-points">{{ getWinner()!.totalPoints }} Points</p>
+      </div>
+
+      <!-- User Country Position -->
+      <div class="user-position" *ngIf="userCountry && getUserCountryPosition() > 0">
+        <p class="user-position-text">
+          Your country <span class="text-pink">{{ userCountry.name }}</span> finished in 
+          <span class="text-pink">{{ getUserCountryPosition() }}</span> place with 
+          <span class="text-pink">{{ userCountry.totalPoints }}</span> points!
+        </p>
+      </div>
+
+      <!-- Leaderboard -->
+      <div class="leaderboard">
+        <h3 class="leaderboard-title">Leaderboard</h3>
+        <div class="leaderboard-list">
+          <div 
+            class="leaderboard-item"
+            *ngFor="let country of countries; let i = index"
+            [class.winner]="isWinner(country)"
+            [class.user-country]="isUserCountry(country)">
+            <div class="position">
+              <span class="position-number">{{ i + 1 }}</span>
+              <span class="position-medal" *ngIf="i === 0">🥇</span>
+              <span class="position-medal" *ngIf="i === 1">🥈</span>
+              <span class="position-medal" *ngIf="i === 2">🥉</span>
+            </div>
+            <div class="country-info">
+              <h4 class="country-name">{{ country.name }}</h4>
+              <p class="country-song">{{ country.song.artistName }} - {{ country.song.songTitle }}</p>
+            </div>
+            <div class="points">
+              <span class="points-value">{{ country.totalPoints }}</span>
+              <span class="points-label">points</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-section">
+        <button 
+          class="action-button statistics-button" 
+          (click)="viewStatistics()">
+          View Statistics
+        </button>
+        <button 
+          class="action-button play-again-button" 
+          (click)="playAgain()">
+          Play Again
+        </button>
+      </div>
+    </div>
+  </div>
 </section>
 

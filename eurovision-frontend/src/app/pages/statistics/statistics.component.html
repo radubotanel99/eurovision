@@ -1,0 +1,81 @@
+<section class="page page--statistics">
+  <img src="assets/images/70-logo.jpg" alt="70 Logo" class="top-right-logo-70">
+  <img src="assets/images/ubm.svg" alt="UBM Logo" class="top-right-logo">
+  <div class="statistics-container">
+    <div class="page-header">
+      <h1>
+        <span class="text-white">Voting </span>
+        <span class="text-pink">Statistics</span>
+      </h1>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-message" *ngIf="errorMessage">
+      <span class="error-icon">⚠</span>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading" *ngIf="isLoading">
+      <p>Loading statistics...</p>
+    </div>
+
+    <!-- Statistics Content -->
+    <div class="statistics-content" *ngIf="!isLoading && tableData.length > 0">
+      <!-- Voting Table -->
+      <div class="voting-breakdown">
+        <!-- <h2 class="section-title">All Votes</h2> -->
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="tableData" class="votes-table">
+            <!-- Voted-For Country Column (Row Header) -->
+            <ng-container matColumnDef="votedForCountry">
+              <th mat-header-cell *matHeaderCellDef class="sticky-column voting-country-header">Voted-For Country</th>
+              <td mat-cell *matCellDef="let row" class="sticky-column voting-country-cell" [class.user-row]="isUserVotedForCountry(row.votedForCountry)">
+                {{ row.votedForCountry }}
+                <span class="user-badge" *ngIf="isUserVotedForCountry(row.votedForCountry)">(You)</span>
+              </td>
+            </ng-container>
+
+            <!-- Dynamic Voting Country Columns -->
+            <ng-container *ngFor="let country of votingCountries" [matColumnDef]="country">
+              <th mat-header-cell *matHeaderCellDef class="country-header-cell">{{ country }}</th>
+              <td mat-cell *matCellDef="let row" 
+                  class="vote-cell"
+                  [class.has-vote]="getCellValue(row, country) !== '-' && getCellValue(row, country) !== 0"
+                  [class.self-vote]="isSelfVote(row.votedForCountry, country)">
+                <span *ngIf="getCellValue(row, country) === '-'" class="self-vote-text">-</span>
+                <span *ngIf="getCellValue(row, country) !== '-' && getCellValue(row, country) !== 0" class="points-value">
+                  {{ getCellValue(row, country) }}
+                </span>
+                <span *ngIf="getCellValue(row, country) !== '-' && getCellValue(row, country) === 0" class="no-points">-</span>
+              </td>
+            </ng-container>
+
+            <!-- Total Column -->
+            <ng-container matColumnDef="total">
+              <th mat-header-cell *matHeaderCellDef class="sticky-column-right total-header">Total</th>
+              <td mat-cell *matCellDef="let row" class="sticky-column-right total-cell">
+                <span class="total-points-value">{{ getTotalPointsForRow(row) }}</span>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header-row"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns" 
+                class="table-row"
+                [class.user-row]="isUserVotedForCountry(row.votedForCountry)"></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div class="action-section">
+        <button 
+          class="back-button" 
+          (click)="goBack()">
+          Back to Results
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+

@@ -58,8 +58,8 @@ export class SelectCountryComponent implements OnInit {
       next: () => {
         console.log('Country updated successfully');
         this.isSubmitting = false;
-        // Navigate to home or next page after successful selection
-        this.router.navigate(['/']);
+        // Navigate to my-performance page after successful selection
+        this.router.navigate(['/my-performance']);
       },
       error: (error) => {
         console.error('Error updating country:', error);

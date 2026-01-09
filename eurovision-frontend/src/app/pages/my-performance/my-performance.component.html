@@ -1,0 +1,56 @@
+<section class="page page--my-performance">
+  <img src="assets/images/70-logo.jpg" alt="70 Logo" class="top-right-logo-70">
+  <img src="assets/images/ubm.svg" alt="UBM Logo" class="top-right-logo">
+  <div class="my-performance-container">
+    <div class="page-header">
+      <h1 style="font-size: 2.5rem;"><b>
+        <span class="text-white">You're </span>
+        <span class="text-pink">LIVE: </span>
+        <span class="text-white">show them the magic of </span>
+        <span class="text-pink">{{ userCountry?.name?.toUpperCase() }}</span>
+        <span class="text-white">!</span>
+      </b>
+    </h1>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-message" *ngIf="errorMessage">
+      <span class="error-icon">⚠</span>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading" *ngIf="isLoading">
+      <p>Loading your performance...</p>
+    </div>
+
+    <!-- Performance Content -->
+    <div class="performance-content" *ngIf="!isLoading && userCountry">
+      <!-- Video Player Section -->
+      <div class="video-section">
+        <div class="video-player-container">
+          <!-- <h3 class="video-title">{{ userCountry.name }} - {{ userCountry.song.songTitle }}</h3> -->
+          <div class="video-wrapper">
+            <iframe
+              *ngIf="safeVideoUrl"
+              [src]="safeVideoUrl"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="youtube-embed">
+            </iframe>
+          </div>
+        </div>
+      </div> 
+
+      <div class="action-section">
+        <button 
+          class="continue-button" 
+          (click)="continueToPerformances()">
+          Continue to Watch Others
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
