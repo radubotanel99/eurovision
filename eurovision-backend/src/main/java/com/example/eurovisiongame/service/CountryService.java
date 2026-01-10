@@ -19,17 +19,20 @@ public class CountryService {
     }
 
     private void initializeCountries() {
-        countries.add(new Country("Romania", 0, false, new Song("Theodor Andrei", "D.G.T. (Off and On)", "NRxv-AUCinQ&list=PLmWYEDTNOGUIr757MlL8s9iyvYx-0lToh&index=24")));
-        countries.add(new Country("France", 0, false, new Song("Louane", "maman", "ZFWzMZh47d0&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=1")));
-        countries.add(new Country("Spain", 0, false, new Song("Melody", "ESA DIVA", "BvVxhbCW9rw&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=9")));
-        countries.add(new Country("Germany", 0, false, new Song("Abor & Tynna", "Baller", "zJplC4-9Scs&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=19")));
-        countries.add(new Country("Italy", 0, false, new Song("Lucio Corsi", "Volevo Essere Un Duro", "-Alz9MnqyZI&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=10")));
-        countries.add(new Country("United Kingdom", 0, false, new Song("Remember Monday", "What The Hell Just Happened?", "-hu6R3ZnOdY&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=27")));
-        countries.add(new Country("Ukraine", 0, false, new Song("Ziferblat", "Bird of Pray", "OJ1x2aiL7ks&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=21")));
-        countries.add(new Country("Sweden", 0, false, new Song("KAJ", "Bara Bada Bastu", "WK3HOMhAeQY&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=25")));
-        countries.add(new Country("Switzerland", 0, false, new Song("Zoë Më", "Voyage", "dGX54zRExR8&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=23")));
-        countries.add(new Country("Ireland", 0, false, new Song("EMMY", "Laika Party", "cZnusVb7yjs&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=16")));
-        countries.add(new Country("Belgium", 0, false, new Song("Red Sebastian", "Strobe Lights", "ScupiVTosHU&list=PLmWYEDTNOGUJG7RV2ARlG2OCpq8oNwz2s&index=18")));
+        countries.add(new Country("Romania", 0, false, new Song("ROXEN", "Amnesia", "5ZWcsj_6Log&list=RD5ZWcsj_6Log&start_radio=1")));
+
+        countries.add(new Country("Greece", 0, false, new Song("Klavdia", "Asteromáta", "UxzeTezgey4&list=PLmWYEDTNOGULzNiFO-sTXK6Jn07gpfn7E&index=17")));
+        countries.add(new Country("Spain", 0, false, new Song("Melody", "ESA DIVA", "H46FB-rLh04&list=PLmWYEDTNOGULzNiFO-sTXK6Jn07gpfn7E&index=16")));
+        countries.add(new Country("Portugal", 0, false, new Song("NAPA", "Deslocado", "-s1Cc2uEj3U&list=PLmWYEDTNOGULzNiFO-sTXK6Jn07gpfn7E&index=1")));
+        countries.add(new Country("Italy", 0, false, new Song("Lucio Corsi", "Volevo Essere Un Duro", "mfAf9-5Oevw&list=PLmWYEDTNOGULzNiFO-sTXK6Jn07gpfn7E&index=4")));
+        countries.add(new Country("Denmark", 0, false, new Song("Sissal", "Hallucination", "gdCAgiSIOUc&list=PLmWYEDTNOGULzNiFO-sTXK6Jn07gpfn7E&index=6")));
+        countries.add(new Country("Lithuania", 0, false, new Song(
+                "Katarsis", "Tavo Akys", "R2f2aZ6Fy58&list=PLmWYEDTNOGULzNiFO-sTXK6Jn07gpfn7E&index=9")));
+        countries.add(new Country("Sweden", 0, false, new Song("KAJ", "Bara Bada Bastu", "WK3HOMhAeQY&list=PLmWYEDTNOGULzNiFO-sTXK6Jn07gpfn7E&index=2")));
+        countries.add(new Country("Finland", 0, false, new Song(
+                "Erika Vikman", "ICH KOMME", "Kg3QoTpnqyw&list=PLmWYEDTNOGULzNiFO-sTXK6Jn07gpfn7E&index=12")));
+        countries.add(new Country("Iceland", 0, false, new Song("VÆB", "RÓA", "LZE1WzOwtQQ&list=PLmWYEDTNOGULzNiFO-sTXK6Jn07gpfn7E&index=7")));
+        countries.add(new Country("Belgium", 0, false, new Song("Red Sebastian", "Strobe Lights", "oVrsnGFmuss&list=PLmWYEDTNOGULzNiFO-sTXK6Jn07gpfn7E&index=15")));
     }
 
     public List<Country> getCountries() {
