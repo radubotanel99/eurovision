@@ -6,6 +6,9 @@ import { PerformancesComponent } from './pages/performances/performances.compone
 import { VotingComponent } from './pages/voting/voting.component';
 import { ResultsComponent } from './pages/results/results.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
+import { TransitionComponent } from './pages/transition/transition.component';
+import { PerformanceCompleteComponent } from './pages/performance-complete/performance-complete.component';
+import { ResultsTransitionComponent } from './pages/results-transition/results-transition.component';
 
 export const routes: Routes = [
   {
@@ -17,8 +20,16 @@ export const routes: Routes = [
     component: SelectCountryComponent,
   },
   {
+    path: 'transition',
+    component: TransitionComponent,
+  },
+  {
     path: 'my-performance',
     component: MyPerformanceComponent,
+  },
+  {
+    path: 'performance-complete',
+    component: PerformanceCompleteComponent,
   },
   {
     path: 'performances',
@@ -27,6 +38,10 @@ export const routes: Routes = [
   {
     path: 'voting',
     component: VotingComponent,
+  },
+  {
+    path: 'results-transition',
+    component: ResultsTransitionComponent,
   },
   {
     path: 'results',

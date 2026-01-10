@@ -1,0 +1,62 @@
+<section class="transition-page">
+  <!-- Curtain Left -->
+  <div class="curtain curtain-left"></div>
+  
+  <!-- Curtain Right -->
+  <div class="curtain curtain-right"></div>
+  
+  <!-- Stage Content -->
+  <div class="stage-content">
+    <div class="spotlight"></div>
+    <div class="content-wrapper">
+      <!-- Title -->
+      <h1 class="title-text">
+        AND NOW, THE MOMENT OF TRUTH.
+      </h1>
+
+      <!-- Subtitle -->
+      <h2 class="subtitle-text">
+        THE RESULTS ARE BEING VERIFIED AND CAST.
+      </h2>
+
+      <!-- Body Text -->
+      <div class="body-text-container">
+        <p class="body-text">
+          The national juries have submitted their rankings, and the global televote is being processed as we speak. One single point could be the difference between a dream and a victory. The atmosphere in the arena is absolutely electric - everything is about to change.
+        </p>
+      </div>
+
+      <!-- Footer/Status -->
+      <div class="footer-status">
+        <p class="footer-text">
+          ARE YOU EXITED? WE CERTAINLY ARE! 🎉
+        </p>
+      </div>
+
+      <!-- Loading Indicator -->
+      <div class="loading-indicator">
+        <div class="loading-dot" *ngFor="let i of [].constructor(3); let idx = index"
+             [style.animation-delay]="(idx * 0.2) + 's'"></div>
+      </div>
+    </div>
+    
+    <!-- Stage Floor -->
+    <div class="stage-floor"></div>
+  </div>
+  
+  <!-- Background Stars/Sparkles -->
+  <div class="stars">
+    <div class="star" *ngFor="let i of [].constructor(20); let idx = index" 
+         [style.animation-delay]="(idx * 0.2) + 's'"
+         [style.left]="(idx * 5) + '%'"
+         [style.top]="(idx * 4) + '%'"></div>
+  </div>
+
+  <!-- Colored Animated Background -->
+  <div class="color-animations">
+    <div class="color-blob blob-1"></div>
+    <div class="color-blob blob-2"></div>
+    <div class="color-blob blob-3"></div>
+    <div class="color-blob blob-4"></div>
+  </div>
+</section>

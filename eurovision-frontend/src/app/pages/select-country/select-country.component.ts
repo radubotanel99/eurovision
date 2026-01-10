@@ -24,6 +24,7 @@ export class SelectCountryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.loadCountries();
   }
 
@@ -58,8 +59,14 @@ export class SelectCountryComponent implements OnInit {
       next: () => {
         console.log('Country updated successfully');
         this.isSubmitting = false;
-        // Navigate to my-performance page after successful selection
-        this.router.navigate(['/my-performance']);
+        // Navigate to transition page with message and target route
+        this.router.navigate(['/transition'], {
+          queryParams: {
+            message: 'Curtain up. Lights on. You\'re LIVE. Give it everything you\'ve got!',
+            target: '/my-performance',
+            duration: 5500
+          }
+        });
       },
       error: (error) => {
         console.error('Error updating country:', error);

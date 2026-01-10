@@ -77,7 +77,7 @@ export class PerformancesComponent implements OnInit {
     // Mark country as watched
     this.watchedCountries.add(country.name);
     const cleanId = this.getCleanVideoId(country.song.youtubeVideoId);
-    const url = `https://www.youtube.com/embed/${cleanId}`;
+    const url = `https://www.youtube.com/embed/${cleanId}?autoplay=1`;
     this.selectedVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 

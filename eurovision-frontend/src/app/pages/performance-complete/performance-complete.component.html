@@ -1,0 +1,60 @@
+<section class="page page--performance-complete">
+  <img src="assets/images/70-logo.jpg" alt="70 Logo" class="top-right-logo-70">
+  <img src="assets/images/ubm.svg" alt="UBM Logo" class="top-right-logo">
+  
+  <div class="performance-complete-container">
+    <!-- Confetti/Sparkles Background -->
+    <div class="confetti-container">
+      <div class="confetti" *ngFor="let i of [].constructor(30); let idx = index" 
+           [style.animation-delay]="(idx * 0.1) + 's'"
+           [style.left]="(idx * 3.33) + '%'"
+           [style.animation-duration]="(2 + (idx % 3)) + 's'"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+      <!-- Celebration Icon/Emoji -->
+      <div class="celebration-icon">🎉</div>
+      
+      <!-- Main Message -->
+      <div class="main-message">
+        <h1 class="message-title">
+          THAT WAS SENSATIONAL!
+        </h1>
+        <h2 class="message-subtitle"><b>
+          AN UNFORGETTABLE SPECTACLE.
+        </b></h2>
+        <h2 class="message-subtitle"><b>
+          THE WORLD LOVED IT, AND YOUR COUNTRY IS PROUD!
+        </b></h2>
+      </div>
+
+      <!-- Instructions Section -->
+      <div class="instructions-section">
+        <p class="instructions-text">
+          Now it's time to watch the other countries perform and vote for your favorites!
+        </p>
+        <p class="instructions-subtext">
+          Experience all the performances and cast your votes to determine the winner.
+        </p>
+      </div>
+
+      <!-- Action Button -->
+      <div class="action-section">
+        <button 
+          class="continue-button" 
+          (click)="goToPerformances()">
+          Go Watch the Other Countries
+        </button>
+      </div>
+    </div>
+
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+      <div class="floating-star" *ngFor="let i of [].constructor(8); let idx = index"
+           [style.animation-delay]="(idx * 0.3) + 's'"
+           [style.left]="(10 + idx * 12) + '%'"
+           [style.top]="(20 + (idx % 3) * 25) + '%'">⭐</div>
+    </div>
+  </div>
+</section>

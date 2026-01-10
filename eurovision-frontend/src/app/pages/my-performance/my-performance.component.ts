@@ -70,7 +70,7 @@ export class MyPerformanceComponent implements OnInit {
   }
 
   continueToPerformances(): void {
-    this.router.navigate(['/performances']);
+    this.router.navigate(['/performance-complete']);
   }
 }
 

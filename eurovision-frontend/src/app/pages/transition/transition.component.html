@@ -1,0 +1,26 @@
+<section class="transition-page">
+  <!-- Curtain Left -->
+  <div class="curtain curtain-left"></div>
+  
+  <!-- Curtain Right -->
+  <div class="curtain curtain-right"></div>
+  
+  <!-- Stage Content -->
+  <div class="stage-content">
+    <div class="spotlight"></div>
+    <div class="message-container">
+      <div class="message-text" [innerHTML]="formatMessage(message)"></div>
+    </div>
+    
+    <!-- Stage Floor -->
+    <div class="stage-floor"></div>
+  </div>
+  
+  <!-- Background Stars/Sparkles -->
+  <div class="stars">
+    <div class="star" *ngFor="let i of [].constructor(20); let idx = index" 
+         [style.animation-delay]="(idx * 0.2) + 's'"
+         [style.left]="(idx * 5) + '%'"
+         [style.top]="(idx * 4) + '%'"></div>
+  </div>
+</section>

@@ -179,7 +179,7 @@ export class VotingComponent implements OnInit {
       next: () => {
         console.log('Votes submitted successfully');
         this.isSubmitting = false;
-        this.router.navigate(['/results']);
+        this.router.navigate(['/results-transition']);
       },
       error: (error) => {
         console.error('Error submitting votes:', error);

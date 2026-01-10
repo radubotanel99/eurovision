@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { EurovisionService } from '../../services/eurovision.service';
 import { Country } from '../../models/country.interface';
+import confetti from 'canvas-confetti';
 
 @Component({
   selector: 'app-results',
@@ -49,12 +50,54 @@ export class ResultsComponent implements OnInit {
         // Sort by total points (descending)
         this.countries = data.sort((a, b) => b.totalPoints - a.totalPoints);
         this.isLoading = false;
+        // Trigger celebration when results are loaded
+        this.celebrate();
       },
       error: (error) => {
         console.error('Error loading countries:', error);
         this.errorMessage = 'Failed to load results. Please try again.';
         this.isLoading = false;
       }
+    });
+  }
+
+  celebrate(): void {
+    // Create a confetti burst
+    const duration = 3000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    function randomInRange(min: number, max: number) {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval: any = setInterval(function() {
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      const particleCount = 50 * (timeLeft / duration);
+      
+      // Launch confetti from both sides
+      confetti({
+        ...defaults,
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+      });
+      confetti({
+        ...defaults,
+        particleCount,
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+      });
+    }, 250);
+
+    // Also do a big burst in the center
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 }
     });
   }
 
