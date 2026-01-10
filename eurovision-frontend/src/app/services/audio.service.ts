@@ -20,6 +20,7 @@ export class AudioService implements OnDestroy {
   private volume: number = 0.5; // Default volume (0-1)
   private userInteractionListener: (() => void) | null = null;
   private waitingForUserInteraction = false; // Track if we're waiting for user interaction to start
+  private userInteractionGranted = false; // Track if user has already granted audio playback permission
 
   // Route to track mapping
   private readonly trackMap: Map<string, TrackConfig> = new Map([
@@ -64,6 +65,9 @@ export class AudioService implements OnDestroy {
 
     // Listen for user interactions to start playback if autoplay was blocked
     this.userInteractionListener = () => {
+      // Mark that user has interacted - this grants permission for future audio
+      this.userInteractionGranted = true;
+      
       // If we have audio and it's not playing, try to start it
       if (this.audio) {
         // If we're waiting for user interaction, try to play
@@ -131,53 +135,88 @@ export class AudioService implements OnDestroy {
   }
 
   private loadTrack(config: TrackConfig): void {
-    // Stop current track if playing
-    this.stop();
-
     // Reset pause flags when loading new track
     this.isPausedByUser = false;
     this.isPausedByVisibility = false;
-    this.waitingForUserInteraction = false;
-
-    // Create new audio element
-    this.audio = new Audio(config.url);
-    this.audio.volume = config.volume !== undefined ? config.volume : this.volume;
-    this.audio.loop = true; // Loop background music
-    this.audio.preload = 'auto'; // Preload the audio
-    
-    // Handle audio events
-    this.audio.addEventListener('ended', () => {
-      // Restart if it ends (shouldn't happen with loop, but just in case)
-      if (this.audio && !this.isPausedByUser && !this.isPausedByVisibility) {
-        this.audio.play().catch(error => {
-          console.warn('Audio autoplay prevented:', error);
-        });
-      }
-    });
-
-    this.audio.addEventListener('error', (error) => {
-      console.error('Error loading audio:', error);
-      this.audio = null;
+    // Don't reset waitingForUserInteraction if user has already granted permission
+    // This allows subsequent tracks to play automatically after first interaction
+    if (!this.userInteractionGranted) {
       this.waitingForUserInteraction = false;
-    });
+    }
 
+    // Reuse existing audio element if available, or create new one
+    // Reusing helps maintain user interaction context in production
+    if (!this.audio) {
+      this.audio = new Audio();
+      this.audio.volume = this.volume;
+      this.audio.loop = true;
+      this.audio.preload = 'auto';
+      
+      // Set up permanent event listeners only once
+      this.audio.addEventListener('ended', () => {
+        // Restart if it ends (shouldn't happen with loop, but just in case)
+        if (this.audio && !this.isPausedByUser && !this.isPausedByVisibility) {
+          this.audio.play().catch(error => {
+            console.warn('Audio autoplay prevented:', error);
+          });
+        }
+      });
+
+      this.audio.addEventListener('error', (error) => {
+        console.error('Error loading audio:', error);
+        this.audio = null;
+        this.waitingForUserInteraction = false;
+      });
+    }
+
+    // Update audio source and properties
+    this.audio.src = config.url;
+    this.audio.volume = config.volume !== undefined ? config.volume : this.volume;
+    this.audio.loop = true;
+    
+    // Stop current playback before changing source
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    
     // Try to play on multiple events to maximize autoplay chances
     const tryPlay = () => {
       if (this.audio && this.audio.paused && !this.isPausedByUser && !this.isPausedByVisibility) {
         this.audio.play().then(() => {
           this.waitingForUserInteraction = false;
+          // Mark that we've successfully played - user interaction is granted
+          this.userInteractionGranted = true;
         }).catch((error) => {
-          // Autoplay blocked - will need user interaction
-          this.waitingForUserInteraction = true;
+          // Autoplay blocked - will need user interaction only if not already granted
+          if (!this.userInteractionGranted) {
+            this.waitingForUserInteraction = true;
+          } else {
+            // User has already granted permission, try again after a short delay
+            setTimeout(() => {
+              if (this.audio && this.audio.paused && !this.isPausedByUser && !this.isPausedByVisibility) {
+                this.audio.play().catch(() => {
+                  // If still fails, might need another interaction
+                  this.waitingForUserInteraction = true;
+                });
+              }
+            }, 100);
+          }
         });
       }
     };
 
     // Try playing on various audio readiness events
-    this.audio.addEventListener('loadeddata', tryPlay);
-    this.audio.addEventListener('canplay', tryPlay);
-    this.audio.addEventListener('canplaythrough', tryPlay);
-    this.audio.addEventListener('loadedmetadata', tryPlay);
+    // Remove old listeners first to avoid duplicates, then add new ones
+    const onLoadedData = () => tryPlay();
+    const onCanPlay = () => tryPlay();
+    const onCanPlayThrough = () => tryPlay();
+    const onLoadedMetadata = () => tryPlay();
+    
+    // Remove any existing listeners by cloning the element (resets listeners)
+    // Actually, better to just add - duplicates won't hurt, browser handles it
+    this.audio.addEventListener('loadeddata', onLoadedData, { once: true });
+    this.audio.addEventListener('canplay', onCanPlay, { once: true });
+    this.audio.addEventListener('canplaythrough', onCanPlayThrough, { once: true });
+    this.audio.addEventListener('loadedmetadata', onLoadedMetadata, { once: true });
     
     // Also try playing immediately and with multiple delays
     tryPlay();
@@ -198,11 +237,29 @@ export class AudioService implements OnDestroy {
     try {
       await this.audio.play();
       this.waitingForUserInteraction = false; // Successfully started, no longer waiting
+      this.userInteractionGranted = true; // Mark that we've successfully played
     } catch (error) {
-      // Autoplay was prevented - user needs to interact first
-      // The user interaction listener will try to play again
-      console.warn('Audio play failed:', error);
-      this.waitingForUserInteraction = true;
+      // Autoplay was prevented
+      if (!this.userInteractionGranted) {
+        // First time - need user interaction
+        this.waitingForUserInteraction = true;
+        console.warn('Audio play failed - waiting for user interaction:', error);
+      } else {
+        // User has already granted permission, but this new audio element needs it again
+        // Try once more after a brief delay
+        setTimeout(async () => {
+          if (this.audio && this.audio.paused && !this.isPausedByUser && !this.isPausedByVisibility) {
+            try {
+              await this.audio.play();
+              this.waitingForUserInteraction = false;
+            } catch (retryError) {
+              // Still failed - might need explicit user interaction for this new element
+              this.waitingForUserInteraction = true;
+              console.warn('Audio play retry failed:', retryError);
+            }
+          }
+        }, 50);
+      }
     }
   }
 
