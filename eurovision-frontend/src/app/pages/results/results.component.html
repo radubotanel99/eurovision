@@ -1,7 +1,10 @@
 <section class="page page--results">
+  <!-- Dark Transition Overlay -->
+  <div class="dark-overlay" [class.fade-out]="!isLoading"></div>
+  
   <img src="assets/images/70-logo.jpg" alt="70 Logo" class="top-right-logo-70">
   <img src="assets/images/ubm.svg" alt="UBM Logo" class="top-right-logo">
-  <div class="results-container">
+  <div class="results-container" [class.fade-in]="!isLoading">
     <div class="page-header">
       <h1>
         <span class="text-white">Final </span>

@@ -50,8 +50,10 @@ export class ResultsComponent implements OnInit {
         // Sort by total points (descending)
         this.countries = data.sort((a, b) => b.totalPoints - a.totalPoints);
         this.isLoading = false;
-        // Trigger celebration when results are loaded
-        this.celebrate();
+        // Trigger celebration after transition completes (delay confetti)
+        setTimeout(() => {
+          this.celebrate();
+        }, 800); // Wait for fade-in transition to complete
       },
       error: (error) => {
         console.error('Error loading countries:', error);
