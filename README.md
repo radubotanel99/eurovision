@@ -27,7 +27,6 @@ EurovisionGame/
 - 🎵 Country selection for Eurovision participants
 - 🎤 Performance viewing
 - 🗳️ Voting system
-- 📊 Real-time results tracking
 
 ## Getting Started
 
