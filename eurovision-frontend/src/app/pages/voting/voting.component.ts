@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EurovisionService } from '../../services/eurovision.service';
+import { AudioService } from '../../services/audio.service';
 import { Country } from '../../models/country.interface';
 import { Vote } from '../../models/vote.interface';
 
@@ -30,7 +31,8 @@ export class VotingComponent implements OnInit {
   constructor(
     private eurovisionService: EurovisionService,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private audioService: AudioService
   ) {}
 
   ngOnInit(): void {
@@ -89,13 +91,17 @@ export class VotingComponent implements OnInit {
   openCountryModal(country: Country): void {
     this.selectedCountry = country;
     const cleanId = this.getCleanVideoId(country.song.youtubeVideoId);
-    const url = `https://www.youtube.com/embed/${cleanId}?modestbranding=1&controls=1&rel=0`;
+    const url = `https://www.youtube.com/embed/${cleanId}?modestbranding=1&controls=1&rel=0&autoplay=1`;
     this.selectedVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    // Pause background music when YouTube video modal opens
+    this.audioService.pause();
   }
 
   closeModal(): void {
     this.selectedCountry = null;
     this.selectedVideoUrl = null;
+    // Resume background music when YouTube video modal closes
+    this.audioService.resume();
   }
 
   playVideo(country: Country): void {

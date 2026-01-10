@@ -29,7 +29,7 @@
           <table mat-table [dataSource]="tableData" class="votes-table">
             <!-- Voted-For Country Column (Row Header) -->
             <ng-container matColumnDef="votedForCountry">
-              <th mat-header-cell *matHeaderCellDef class="sticky-column voting-country-header">Voted-For Country</th>
+              <th mat-header-cell *matHeaderCellDef class="sticky-column voting-country-header">Country</th>
               <td mat-cell *matCellDef="let row" class="sticky-column voting-country-cell" [class.user-row]="isUserVotedForCountry(row.votedForCountry)">
                 {{ row.votedForCountry }}
                 <span class="user-badge" *ngIf="isUserVotedForCountry(row.votedForCountry)">(You)</span>
