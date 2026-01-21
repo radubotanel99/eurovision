@@ -2,6 +2,8 @@
 
 Eurovision Song Contest game application with country selection, performance viewing, voting, and results tracking. Built with Angular frontend and Spring Boot backend.
 
+Try it: https://eurovision-29r2.onrender.com/
+
 ## Project Structure
 
 ```
