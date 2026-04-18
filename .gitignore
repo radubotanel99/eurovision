@@ -61,6 +61,9 @@ logs/
 .env
 .env.local
 
+# Playwright MCP artifacts
+.playwright-mcp/
+
 # Temporary files
 *.tmp
 *.temp

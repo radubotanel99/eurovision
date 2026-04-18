@@ -88,18 +88,7 @@
   margin: 0;
 }
 
-.table-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
-  pointer-events: none;
-  z-index: 0;
-}
+/* removed dark overlay that was killing cell contrast */
 
 /* Material Table Overrides */
 .votes-table {
@@ -114,7 +103,8 @@
 
 .votes-table th,
 .votes-table td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.95);
   padding: var(--spacing-sm);
   text-align: center;
@@ -217,7 +207,7 @@
 
 /* Country Header Cells */
 .country-header-cell {
-  background: rgba(242, 13, 88, 0.25) !important;
+  background: rgba(242, 13, 88, 0.45) !important;
   font-size: 0.85rem;
   min-width: 100px;
   padding: var(--spacing-sm) var(--spacing-xs) !important;
@@ -249,7 +239,7 @@
 }
 
 .vote-cell .no-points {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.55);
   font-size: 0.85rem;
 }
 

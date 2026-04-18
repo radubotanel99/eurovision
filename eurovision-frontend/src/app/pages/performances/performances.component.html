@@ -80,8 +80,11 @@
 
       <!-- Continue Button -->
       <div class="action-section" *ngIf="!isLoading && countries.length > 0">
-        <button 
-          class="continue-button" 
+        <p class="watch-progress" [class.watch-progress--complete]="areAllCountriesWatched()">
+          Watched {{ watchedCountries.size }} / {{ countries.length }}
+        </p>
+        <button
+          class="continue-button"
           [disabled]="!areAllCountriesWatched()"
           (click)="continueToVoting()">
           Continue to Voting
